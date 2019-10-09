@@ -9,7 +9,7 @@
         <em>Rp</em>1000.000
       </div>
       <div class="produject-desc">
-        <span class="interest">Bunga>= 0.3/hari</span>
+        <span class="interest">Bunga ≥0.3% / hari</span>
         <span class="cycle">Prises 1 hari</span>
       </div>
     </div>
@@ -19,13 +19,13 @@
   </div>
 </template>
 <script>
-import Vue from 'vue';
-import { Icon } from 'vant';
-import MyButton from '@/base/button/button';
-Vue.use(Icon);
+import Vue from 'vue'
+import { Icon } from 'vant'
+import MyButton from '@/base/button/button'
+Vue.use(Icon)
 export default {
   data () {
-    return {};
+    return {}
   },
   components: {
     MyButton
@@ -34,10 +34,10 @@ export default {
     goToDetails () {
       this.$router.push({
         path: '/details'
-      });
+      })
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .item-wrap {
@@ -56,7 +56,7 @@ export default {
     .produject-price {
       padding: 8px 0;
       font-size: 16px;
-      color: #fe6a47;
+      color: #e14b36;
       font-weight: 600;
       em {
         font-weight: 600;
