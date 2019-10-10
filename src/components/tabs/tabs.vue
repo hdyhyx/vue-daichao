@@ -2,7 +2,7 @@
   <div class="tabs">
     <van-tabbar v-model="active">
       <van-tabbar-item replace to="/home">
-        <span>自定义</span>
+        <span>Beanda</span>
         <img slot="icon" slot-scope="props" :src="props.active ? homeIcon.active : homeIcon.normal" />
       </van-tabbar-item>
       <van-tabbar-item replace to="/market" icon="search">
