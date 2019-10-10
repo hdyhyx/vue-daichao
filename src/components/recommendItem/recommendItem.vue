@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="contnet-right">
-      <my-button class="detail-btn" @click="goToDetails">详情</my-button>
+      <my-button class="detail-btn" :myClass="'opcityBlue'" @click="goToDetails">Pinjam</my-button>
     </div>
   </div>
 </template>
@@ -85,6 +85,7 @@ export default {
       width: 70px;
       height: 25px;
       transform: translate(-50%, -50%);
+      border-radius: 4px;
     }
   }
 }

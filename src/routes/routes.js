@@ -11,5 +11,15 @@ export default [{
   path: '/details',
   name: 'details',
   component: () => import('@/views/details/details.vue')
+},
+{
+  path: '/market',
+  name: 'market',
+  component: () => import('@/views/market/market.vue')
+},
+{
+  path: '/my',
+  name: 'my',
+  component: () => import('@/views/my/my.vue')
 }
 ]

@@ -154,3 +154,13 @@ html {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
 }
+
+@font-face {
+  font-family: "DINMedium";
+  src: url('../font/DINPro-Medium.ttf');
+}
+
+@font-face {
+  font-family: "DINRegular";
+  src: url('../font/DINPro-Regular.otf');
+}

@@ -1,9 +1,22 @@
 <template>
   <div class="tabs">
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-      <van-tabbar-item icon="search">标签</van-tabbar-item>
-      <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
+      <van-tabbar-item replace to="/home">
+        <span>自定义</span>
+        <img slot="icon" slot-scope="props" :src="props.active ? homeIcon.active : homeIcon.normal" />
+      </van-tabbar-item>
+      <van-tabbar-item replace to="/market" icon="search">
+        <span>Pasar</span>
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.active ? marketIcon.active : marketIcon.normal"
+        />
+      </van-tabbar-item>
+      <van-tabbar-item replace to="/my" icon="friends-o">
+        <span>Pribadi</span>
+        <img slot="icon" slot-scope="props" :src="props.active ? myIcon.active : myIcon.normal" />
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -14,7 +27,25 @@ Vue.use(Tabbar).use(TabbarItem)
 export default {
   data () {
     return {
-      active: 1
+      active: 0,
+      homeIcon: {
+        normal:
+          'http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/home.png',
+        active:
+          'http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/home-ative.png'
+      },
+      marketIcon: {
+        normal:
+          'http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/market.png',
+        active:
+          'http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/market-active.png'
+      },
+      myIcon: {
+        normal:
+          'http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/my.png',
+        active:
+          'http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/my-ative.png'
+      }
     }
   }
 }
