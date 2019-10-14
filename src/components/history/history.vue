@@ -16,11 +16,8 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import { DropdownMenu, DropdownItem } from 'vant'
 import Scroll from '@/base/scroll/scroll.vue'
 import recommendItem from '@/components/recommendItem/recommendItem.vue'
-Vue.use(DropdownMenu).use(DropdownItem)
 export default {
   data () {
     return {

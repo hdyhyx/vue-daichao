@@ -12,10 +12,10 @@
         <van-tab name="2" title="Sejarah"></van-tab>
       </van-tabs>
     </div>
-    <div v-if="activeName==='1'">
+    <div v-show="activeName==='1'">
       <platform></platform>
     </div>
-    <div v-else>
+    <div v-show="activeName==='2'">
       <history></history>
     </div>
   </div>
@@ -36,6 +36,9 @@ export default {
   components: {
     platform,
     history
+  },
+  created () {
+    this.activeName = this.$route.params.id
   }
 }
 </script>

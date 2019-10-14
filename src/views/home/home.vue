@@ -5,9 +5,11 @@
     </div>
     <div class="title-wrap">
       <div class="icon">
-        <van-icon name="fire" />
+        <svg class="icon icon-size" aria-hidden="true">
+          <use xlink:href="#iconrecommend" />
+        </svg>
       </div>
-      <div class="title">推荐</div>
+      <div class="title">Platform Unggulan</div>
     </div>
     <div class="recommend-wrap">
       <scroll class="recommend-list">
@@ -26,15 +28,15 @@
   </div>
 </template>
 <script>
-import Vue from 'vue';
-import Slider from '@/base/slider/slider.vue';
-import Scroll from '@/base/scroll/scroll.vue';
-import recommendItem from '@/components/recommendItem/recommendItem.vue';
-import { Cell, CellGroup, Icon } from 'vant';
+import Vue from 'vue'
+import Slider from '@/base/slider/slider.vue'
+import Scroll from '@/base/scroll/scroll.vue'
+import recommendItem from '@/components/recommendItem/recommendItem.vue'
+import { Cell, CellGroup, Icon } from 'vant'
 
 Vue.use(Cell)
   .use(CellGroup)
-  .use(Icon);
+  .use(Icon)
 export default {
   data () {
     return {
@@ -42,14 +44,14 @@ export default {
         'https://img.yzcdn.cn/vant/apple-1.jpg',
         'https://img.yzcdn.cn/vant/apple-2.jpg'
       ]
-    };
+    }
   },
   components: {
     Slider,
     Scroll,
     recommendItem
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .home {
@@ -76,7 +78,7 @@ export default {
       font-size: 14px;
     }
     &.title-wrap::after {
-      content: "";
+      content: '';
       width: 160%;
       height: 200%;
       position: absolute;

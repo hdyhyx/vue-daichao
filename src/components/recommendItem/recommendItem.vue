@@ -57,9 +57,8 @@ export default {
       padding: 8px 0;
       font-size: 16px;
       color: #e14b36;
-      font-weight: 600;
+      font-family: 'DINMedium';
       em {
-        font-weight: 600;
         padding-right: 5px;
         font-style: normal;
       }

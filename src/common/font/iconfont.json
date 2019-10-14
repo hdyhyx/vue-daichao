@@ -1,44 +1,71 @@
 {
-  "id": "1433984",
-  "name": "mall",
+  "id": "1451212",
+  "name": "shuaige",
   "font_family": "iconfont",
   "css_prefix_text": "icon",
   "description": "",
-  "glyphs": [
-    {
-      "icon_id": "11051186",
-      "name": "mall-qrcode",
-      "font_class": "mengbanzu",
-      "unicode": "e65d",
-      "unicode_decimal": 58973
+  "glyphs": [{
+      "icon_id": "11224173",
+      "name": "my",
+      "font_class": "my",
+      "unicode": "e601",
+      "unicode_decimal": 58881
     },
     {
-      "icon_id": "11051811",
-      "name": "mall-mange",
-      "font_class": "mall-mange",
-      "unicode": "e65f",
-      "unicode_decimal": 58975
+      "icon_id": "11224174",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e602",
+      "unicode_decimal": 58882
     },
     {
-      "icon_id": "11051906",
-      "name": "mall-add",
-      "font_class": "mall-add",
-      "unicode": "e660",
-      "unicode_decimal": 58976
+      "icon_id": "11224176",
+      "name": "msg",
+      "font_class": "msg",
+      "unicode": "e603",
+      "unicode_decimal": 58883
     },
     {
-      "icon_id": "11052041",
-      "name": "mall-order",
-      "font_class": "mall-order",
-      "unicode": "e662",
-      "unicode_decimal": 58978
+      "icon_id": "11224178",
+      "name": "market",
+      "font_class": "market",
+      "unicode": "e604",
+      "unicode_decimal": 58884
     },
     {
-      "icon_id": "11052298",
-      "name": "mall-home",
-      "font_class": "mall-home",
-      "unicode": "e663",
-      "unicode_decimal": 58979
+      "icon_id": "11224179",
+      "name": "time",
+      "font_class": "time",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "11224180",
+      "name": "info",
+      "font_class": "info",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "11224181",
+      "name": "pwd",
+      "font_class": "pwd",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "11224182",
+      "name": "setting",
+      "font_class": "setting",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "11224183",
+      "name": "recommend",
+      "font_class": "recommend",
+      "unicode": "e609",
+      "unicode_decimal": 58889
     }
   ]
 }

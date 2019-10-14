@@ -1,11 +1,11 @@
 <template>
   <div class="tabs">
-    <van-tabbar v-model="active">
+    <van-tabbar v-model="active" route>
       <van-tabbar-item replace to="/home">
         <span>Beanda</span>
         <img slot="icon" slot-scope="props" :src="props.active ? homeIcon.active : homeIcon.normal" />
       </van-tabbar-item>
-      <van-tabbar-item replace to="/market" icon="search">
+      <van-tabbar-item replace to="/market/1">
         <span>Pasar</span>
         <img
           slot="icon"
@@ -13,7 +13,7 @@
           :src="props.active ? marketIcon.active : marketIcon.normal"
         />
       </van-tabbar-item>
-      <van-tabbar-item replace to="/my" icon="friends-o">
+      <van-tabbar-item replace to="/my">
         <span>Pribadi</span>
         <img slot="icon" slot-scope="props" :src="props.active ? myIcon.active : myIcon.normal" />
       </van-tabbar-item>

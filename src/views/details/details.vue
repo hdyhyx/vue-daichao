@@ -1,40 +1,9 @@
 <template>
-  <div class="details">
-    <van-nav-bar title="标题" fixed :border="false" left-arrow @click-left="onClickLeft" />
-    <div class="head-wrap">
-      <div class="content">
-        <div class="head">
-          <div class="head-left">
-            <div class="container">
-              <div class="price">
-                <em>RP</em>
-                1000.000
-              </div>
-              <p class="desc">Pinjaman</p>
-            </div>
-          </div>
-          <div class="head-right">
-            <div class="date">
-              <em>7</em>
-              Hari
-            </div>
-            <p class="desc">Lama Pinjam</p>
-          </div>
-        </div>
-        <div class="footer">
-          <div class="footer-left">
-            <div class="interest">0.3% hari</div>
-            <p class="desc">Referemsi tarif</p>
-          </div>
-          <div class="footer-mid">
-            <div class="price">Rp 1.021.000000000</div>
-            <p class="desc">Pembayaran</p>
-          </div>
-          <div class="footer-right">
-            <div class="interest-price">Rp 21.000</div>
-            <p class="desc">Bunga + admin</p>
-          </div>
-        </div>
+  <transition name="slides">
+    <div class="details">
+      <van-nav-bar title="标题" fixed :border="false" left-arrow @click-left="onClickLeft" />
+      <div class="head-wrap">
+        <card></card>
       </div>
       <div class="details-info">
         <scroll class="details-wrap">
@@ -72,13 +41,14 @@
         <my-button class="install-btn">Daftar Sekarang</my-button>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 import Vue from 'vue'
 import Scroll from '@/base/scroll/scroll.vue'
 import MyButton from '@/base/button/button'
+import Card from '@/components/card/card'
 import { NavBar } from 'vant'
 Vue.use(NavBar)
 export default {
@@ -87,7 +57,8 @@ export default {
   },
   components: {
     Scroll,
-    MyButton
+    MyButton,
+    Card
   },
   methods: {
     onClickLeft () {
@@ -99,6 +70,13 @@ export default {
 
 <style scoped lang="scss">
 .details {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  z-index: 99;
   .van-nav-bar {
     background: rgba(0, 0, 0, 0);
     .van-icon {
@@ -107,6 +85,14 @@ export default {
     .van-nav-bar__title {
       color: #ffffff;
     }
+  }
+  &.slides-enter-active,
+  &.slides-leave-active {
+    transition: all 0.25s;
+  }
+  &.slides-enter,
+  &.slides-leave-to {
+    transform: translate3d(100%, 0, 0);
   }
   .head-wrap {
     box-sizing: border-box;
