@@ -3,7 +3,6 @@
     <div class="filter-wrap">
       <van-dropdown-menu>
         <van-dropdown-item v-model="value1" :options="option1" />
-        <van-dropdown-item v-model="value2" :options="option2" />
         <van-dropdown-item v-model="value3" :options="option3" />
       </van-dropdown-menu>
     </div>
@@ -26,25 +25,19 @@
 </template>
 <script>
 import Vue from 'vue'
-import { DropdownMenu, DropdownItem } from 'vant'
 import Scroll from '@/base/scroll/scroll.vue'
 import recommendItem from '@/components/recommendItem/recommendItem.vue'
+import { DropdownMenu, DropdownItem } from 'vant'
 Vue.use(DropdownMenu).use(DropdownItem)
 export default {
   data () {
     return {
       value1: 0,
-      value2: '1',
       value3: '4',
       option1: [
         { text: 'Urutan Standar', value: 0 },
         { text: 'Bunga Rendah', value: 1 },
         { text: 'Persetujuan Mudah', value: 2 }
-      ],
-      option2: [
-        { text: 'Jumlah Uang', value: '1' },
-        { text: '好评排序', value: '2' },
-        { text: '销量排序', value: '3' }
       ],
       option3: [
         { text: 'Membyar sekali', value: '4' },
@@ -55,13 +48,16 @@ export default {
   components: {
     Scroll,
     recommendItem
-  }
+  },
+  created () {},
+  methods: {}
 }
 </script>
 <style lang="scss" scoped>
 .platform {
   .filter-wrap {
     overflow: hidden;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   }
   .produject-list {
     position: absolute;

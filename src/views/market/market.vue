@@ -12,10 +12,10 @@
         <van-tab name="2" title="Sejarah"></van-tab>
       </van-tabs>
     </div>
-    <div v-show="activeName==='1'">
+    <div v-if="activeName==='1'">
       <platform></platform>
     </div>
-    <div v-show="activeName==='2'">
+    <div v-if="activeName==='2'">
       <history></history>
     </div>
   </div>
@@ -25,8 +25,11 @@
 import Vue from 'vue'
 import platform from '@/components/platform/platform.vue'
 import history from '@/components/history/history.vue'
+import { getAllProduct, getHistoryProduct } from '@/api/product'
 import { Tab, Tabs } from 'vant'
 Vue.use(Tab).use(Tabs)
+const PLATFORM = '1'
+const HISTORTY = '2'
 export default {
   data () {
     return {
@@ -37,8 +40,31 @@ export default {
     platform,
     history
   },
+  watch: {
+    activeName (value) {
+      if (value === PLATFORM) {
+        this.getAllProduct()
+      } else if (value === HISTORTY) {
+        this.getHistoryProduct()
+      }
+    }
+  },
   created () {
-    this.activeName = this.$route.params.id
+    if (this.activeName === PLATFORM) {
+      this.getAllProduct()
+    }
+  },
+  methods: {
+    getAllProduct () {
+      getAllProduct().then(res => {
+        console.log(res)
+      })
+    },
+    getHistoryProduct () {
+      getHistoryProduct().then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>

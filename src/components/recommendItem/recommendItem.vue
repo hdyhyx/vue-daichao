@@ -1,5 +1,5 @@
 <template>
-  <div class="item-wrap">
+  <div class="item-wrap" @click="goToDetails">
     <div class="content-left">
       <van-icon name="fire" />
     </div>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="contnet-right">
-      <my-button class="detail-btn" :myClass="'opcityBlue'" @click="goToDetails">Pinjam</my-button>
+      <my-button class="detail-btn" :myClass="'opcityBlue'">Pinjam</my-button>
     </div>
   </div>
 </template>

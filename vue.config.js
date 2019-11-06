@@ -28,7 +28,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://192.168.10.80:8080', // 练练
-        target: 'http://tseller.doveic.com/', // 测试
+        target: 'http://47.74.180.93:9511/', // 测试
         // target: 'http://192.168.10.206:8090', // 威哥
         // target: 'http://192.168.10.33:8088', // 德华
         changeOrigin: true,

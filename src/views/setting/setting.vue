@@ -32,6 +32,7 @@ Vue.use(Cell)
   .use(CellGroup)
   .use(NavBar)
 export default {
+  name: 'setting',
   data () {
     return {}
   },
