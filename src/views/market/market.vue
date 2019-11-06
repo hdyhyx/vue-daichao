@@ -25,11 +25,8 @@
 import Vue from 'vue'
 import platform from '@/components/platform/platform.vue'
 import history from '@/components/history/history.vue'
-import { getAllProduct, getHistoryProduct } from '@/api/product'
 import { Tab, Tabs } from 'vant'
 Vue.use(Tab).use(Tabs)
-const PLATFORM = '1'
-const HISTORTY = '2'
 export default {
   data () {
     return {
@@ -40,32 +37,9 @@ export default {
     platform,
     history
   },
-  watch: {
-    activeName (value) {
-      if (value === PLATFORM) {
-        this.getAllProduct()
-      } else if (value === HISTORTY) {
-        this.getHistoryProduct()
-      }
-    }
-  },
-  created () {
-    if (this.activeName === PLATFORM) {
-      this.getAllProduct()
-    }
-  },
-  methods: {
-    getAllProduct () {
-      getAllProduct().then(res => {
-        console.log(res)
-      })
-    },
-    getHistoryProduct () {
-      getHistoryProduct().then(res => {
-        console.log(res)
-      })
-    }
-  }
+  watch: {},
+  created () {},
+  methods: {}
 }
 </script>
 

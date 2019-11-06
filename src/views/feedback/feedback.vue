@@ -11,7 +11,7 @@
       />
       <div class="count">{{count}}/200</div>
       <div class="submit-wrap">
-        <my-button class="submit">Kirim</my-button>
+        <my-button class="submit" @click="handleClickSave">Kirim</my-button>
       </div>
     </div>
   </transition>
@@ -21,6 +21,7 @@
 import Vue from 'vue'
 import MyButton from '@/base/button/button'
 import { Cell, CellGroup, NavBar, Field } from 'vant'
+import { Addproduct } from '@/api/product'
 
 Vue.use(Cell)
   .use(CellGroup)
@@ -35,6 +36,9 @@ export default {
   methods: {
     onClickLeft () {
       this.$router.go(-1)
+    },
+    handleClickSave () {
+      Addproduct()
     }
   },
   components: {
