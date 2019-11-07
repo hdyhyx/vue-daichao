@@ -5,7 +5,7 @@
         <slider>
           <div v-for="(item,index) in recommends" :key="index">
             <a class="slide-item" href="/home">
-              <img :src="item.url" />
+              <img @load="loadImg" :src="item.address" />
             </a>
           </div>
         </slider>
@@ -23,7 +23,7 @@
     <div class="recommend-wrap">
       <scroll class="recommend-list" v-if="productList.length">
         <div>
-          <recommend-item v-for="(item,index) in productList" :key="index"></recommend-item>
+          <recommend-item v-for="(item,index) in productList" :key="index" :recommend="item"></recommend-item>
         </div>
       </scroll>
       <div v-else class="product-loading">
@@ -61,6 +61,9 @@ export default {
     Scroll,
     recommendItem
   },
+  methods: {
+    loadImg () {}
+  },
   created () {
     getHomeBanner().then(res => {
       console.log(res)
@@ -68,12 +71,10 @@ export default {
       this.recommends = results
     })
     getHomeProduct().then(res => {
-      const { data } = res.data
-      // this.productList = data
-      console.log(data)
+      const { results } = res.data
+      this.productList = results
     })
-  },
-  methods: {}
+  }
 }
 </script>
 <style lang="scss" scoped>

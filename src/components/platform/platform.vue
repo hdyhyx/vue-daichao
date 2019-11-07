@@ -12,21 +12,14 @@
         class="produject-wrap"
         :pullup="true"
         @scrollToEnd="scroll"
+        :data="productList"
         v-if="productList.length && !productLoading"
       >
         <div>
-          <div>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
+          <div v-for="(item,index) in productList" :key="index">
+            <recommend-item :recommend="item"></recommend-item>
           </div>
-          <pullup-loading :isPullUpLoad="isPullLoding"></pullup-loading>
+          <pullup-loading v-if="productList.length>9" :isPullUpLoad="isPullLoding"></pullup-loading>
         </div>
       </scroll>
       <div v-if="isUnfoundData">
@@ -49,7 +42,7 @@ import Scroll from '@/base/scroll/scroll'
 import RecommendItem from '@/components/recommendItem/recommendItem'
 import UnfoundData from '@/components/unfoundData/unfoundData'
 import PullupLoading from '@/components/pullupLoading/pullupLoading'
-import { DropdownMenu, DropdownItem, Skeleton } from 'vant'
+import { DropdownMenu, DropdownItem, Skeleton, Toast } from 'vant'
 import { getAllProduct, getHistoryProduct } from '@/api/product'
 Vue.use(DropdownMenu)
   .use(DropdownItem)
@@ -66,8 +59,8 @@ export default {
       isPullLoding: false,
       isUnfoundData: false,
       productLoading: true,
-      pageNum: '10', // 个数
-      size: '1', // 页数
+      pageNum: '1', // 个数
+      size: '10', // 页数
       option1: [
         { text: 'Urutan Standar', value: '' },
         { text: 'Bunga Rendah', value: 'interestRate' },
@@ -89,6 +82,8 @@ export default {
     sortVal: {
       handler (val) {
         this.productList = []
+        this.pageNum = 1
+        this.size = 10
         this.isUnfoundData = false
         this.productLoading = true
         const formData = Object.assign(val, {
@@ -119,6 +114,15 @@ export default {
   methods: {
     scroll () {
       this.isPullLoding = true
+      this.pageNum++
+      const formData = Object.assign(
+        {},
+        {
+          pageNum: this.pageNum,
+          size: this.size
+        }
+      )
+      this.getAllProduct(formData)
     },
     onChangeSort (value) {
       console.log(value)
@@ -126,13 +130,17 @@ export default {
     getAllProduct (formData) {
       getAllProduct(formData).then(res => {
         this.productLoading = false
+        this.isPullLoding = false
         const {
           data: { result }
         } = res
         if (result.length) {
-          this.productList = result
+          this.productList = this.productList.concat(result)
         } else {
-          this.isUnfoundData = true
+          Toast('暂无数据')
+        }
+        if (!this.productList.length) {
+          this.UnfoundData = true
         }
       })
     },

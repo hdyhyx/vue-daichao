@@ -4,12 +4,13 @@
       <van-icon name="fire" />
     </div>
     <div class="content-mid">
-      <div class="produject-name">CiClikuy</div>
+      <div class="produject-name">{{recommend.name}}</div>
       <div class="produject-price">
-        <em>Rp</em>1000.000
+        <em>Rp</em>
+        {{recommend.loanAmount}}
       </div>
       <div class="produject-desc">
-        <span class="interest">Bunga ≥0.3% / hari</span>
+        <span class="interest">Bunga ≥{{recommend.interestRate}}% / hari</span>
         <span class="cycle">Prises 1 hari</span>
       </div>
     </div>
@@ -30,13 +31,24 @@ export default {
   components: {
     MyButton
   },
+  props: {
+    recommend: {
+      type: Object,
+      default: () => {}
+    }
+  },
   methods: {
     goToDetails () {
+      const productId = this.recommend.id
       this.$router.push({
-        path: '/details'
+        path: '/details',
+        query: {
+          productId: productId
+        }
       })
     }
-  }
+  },
+  created () {}
 }
 </script>
 <style lang="scss" scoped>

@@ -3,34 +3,22 @@
     <scroll
       class="produject-wrap"
       :pullup="true"
+      :data="historyList"
       @scrollToEnd="scroll"
-      v-if="productList.length && !productSkeleton"
+      v-if="historyList.length && !productSkeleton"
     >
       <div>
-        <div>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
-          <history-item></history-item>
+        <div v-for="(item,index) in historyList" :key="index">
+          <history-item :history="item"></history-item>
         </div>
-        <pullup-loading :isPullUpLoad="isPullLoding"></pullup-loading>
+        <pullup-loading v-if="historyList.length>9" :isPullUpLoad="isPullLoding"></pullup-loading>
       </div>
     </scroll>
     <div v-if="isUnfoundData">
       <unfound-data></unfound-data>
     </div>
     <div v-if="productSkeleton" class="product-skeleton">
-      <van-skeleton title avatar :row="2" />
+      <van-skeleton style="margin-top:15px" title avatar :row="2" />
       <van-skeleton style="margin-top:15px" title avatar :row="2" />
       <van-skeleton style="margin-top:15px" title avatar :row="2" />
       <van-skeleton style="margin-top:15px" title avatar :row="2" />
@@ -56,9 +44,9 @@ export default {
       productSkeleton: true,
       isUnfoundData: false,
       isPullLoding: false,
-      productList: [],
-      pageNum: 10,
-      size: 1
+      historyList: [],
+      pageNum: 1,
+      size: 10
     }
   },
   components: {
@@ -69,9 +57,9 @@ export default {
   },
   created () {
     if (getToken()) {
-      this.getHistoryProduct()
+      this.getHistoryProduct(this.pageNum, this.size)
     } else {
-      this.productList = []
+      this.historyList = []
       this.productSkeleton = false
       this.isUnfoundData = true
       Toast('请登录')
@@ -80,6 +68,15 @@ export default {
   methods: {
     scroll () {
       this.isPullLoding = true
+      this.pageNum++
+      const formData = Object.assign(
+        {},
+        {
+          pageNum: this.pageNum,
+          size: this.size
+        }
+      )
+      this.getHistoryProduct(formData)
     },
     getHistoryProduct (pageNum, size) {
       const formData = Object.assign(
@@ -91,13 +88,17 @@ export default {
       )
       getHistoryProduct(formData).then(res => {
         this.productSkeleton = false
+        this.isPullLoding = false
         const {
-          data: { result }
+          data: { results }
         } = res
-        if (result.length) {
-          this.productList = result
+        if (results.length) {
+          this.historyList = this.historyList.concat(results)
         } else {
-          this.isUnfoundData = true
+          Toast('暂无数据')
+        }
+        if (!this.historyList.length) {
+          this.UnfoundData = true
         }
       })
     }
@@ -114,6 +115,9 @@ export default {
   .produject-wrap {
     height: 100%;
     overflow: hidden;
+    .product-skeleton {
+      margin-top: 15px;
+    }
   }
 }
 </style>

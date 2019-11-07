@@ -20,7 +20,7 @@
     </div>
     <div class="footer">
       <div class="footer-left">
-        <div class="interest">0.3% hari</div>
+        <div class="interest">{{detail.interestRate}}% hari</div>
         <p class="desc">Referemsi tarif</p>
       </div>
       <div class="footer-mid">
@@ -39,6 +39,15 @@
 export default {
   data () {
     return {}
+  },
+  props: {
+    detail: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  created () {
+    console.log(this.detail)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="my">
     <div class="head-wrap">
-      <div class="avatar" @click="goToLogin"></div>
+      <div v-if="userInfo" class="avatar" @click="goToLogin"></div>
       <div class="tel">{{isLogin?userInfo.name:'请登录'}}</div>
     </div>
     <div class="cell-list">

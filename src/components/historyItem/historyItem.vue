@@ -7,9 +7,9 @@
         height="50"
       />
     </div>
-    <div class="content-mid">COCO TEK</div>
+    <div class="content-mid">{{history.name}}</div>
     <div class="content-right">
-      <div class="price">Rp 1.000.000</div>
+      <div class="price">Rp {{history.loanAmount}}</div>
       <div class="time">15/09/2019</div>
     </div>
   </div>
@@ -19,6 +19,12 @@
 export default {
   data () {
     return {}
+  },
+  props: {
+    history: {
+      type: Object,
+      default: () => {}
+    }
   }
 }
 </script>

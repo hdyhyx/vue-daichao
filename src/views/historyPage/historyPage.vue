@@ -7,22 +7,13 @@
           class="history-wrap"
           :pullup="true"
           @scrollToEnd="scroll"
-          v-if="productList.length && !productSkeleton"
+          v-if="historyList.length && !productSkeleton"
         >
           <div>
-            <div>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
-              <history-item></history-item>
+            <div v-for="(item,index) in historyList" :key="index">
+              <history-item :history="item"></history-item>
             </div>
-            <pullup-loading :isPullUpLoad="isPullLoding"></pullup-loading>
+            <pullup-loading v-if="historyList.length>9" :isPullUpLoad="isPullLoding"></pullup-loading>
           </div>
         </scroll>
         <div v-if="isUnfoundData">
@@ -59,7 +50,7 @@ export default {
       productSkeleton: true,
       isUnfoundData: false,
       isPullLoding: false,
-      productList: [],
+      historyList: [],
       pageNum: 10,
       size: 1
     }
@@ -79,6 +70,15 @@ export default {
     },
     scroll () {
       this.isPullLoding = true
+      this.pageNum++
+      const formData = Object.assign(
+        {},
+        {
+          pageNum: this.pageNum,
+          size: this.size
+        }
+      )
+      this.getHistoryProduct(formData)
     },
     getHistoryProduct (pageNum, size) {
       const formData = Object.assign(
@@ -90,13 +90,17 @@ export default {
       )
       getHistoryProduct(formData).then(res => {
         this.productSkeleton = false
+        this.isPullLoding = false
         const {
-          data: { result }
+          data: { results }
         } = res
-        if (result.length) {
-          this.productList = result
+        if (results.length) {
+          this.historyList = this.historyList.concat(results)
         } else {
-          this.isUnfoundData = true
+          Toast('暂无数据')
+        }
+        if (!this.historyList.length) {
+          this.UnfoundData = true
         }
       })
     }
