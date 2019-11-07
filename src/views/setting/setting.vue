@@ -20,17 +20,24 @@
           <span class="custom-title">Nomor versi</span>
         </template>
       </van-cell>
+      <div class="out-login">
+        <my-button class="out-btn" @click="handleOutLogin">退出登录</my-button>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
 import Vue from 'vue'
-import { Cell, CellGroup, NavBar } from 'vant'
-
+import { Cell, CellGroup, NavBar, Dialog, Toast } from 'vant'
+import { outLogin } from '@/api/user'
+import { getToken, setToken } from '@/common/utils/cookie'
+import MyButton from '@/base/button/button'
 Vue.use(Cell)
   .use(CellGroup)
   .use(NavBar)
+  .use(Dialog)
+  .use(Toast)
 export default {
   name: 'setting',
   data () {
@@ -39,7 +46,40 @@ export default {
   methods: {
     onClickLeft () {
       this.$router.go(-1)
+    },
+    handleOutLogin () {
+      Dialog.confirm({
+        title: '标题',
+        message: '弹窗内容'
+      })
+        .then(() => {
+          const formData = Object.assign(
+            {},
+            {
+              token: getToken()
+            }
+          )
+          outLogin(formData).then(res => {
+            console.log(res)
+            const {
+              data: { code, message }
+            } = res
+            if (code !== '200') {
+              Toast(message)
+            } else {
+              setToken('') // 清除Token
+              this.$store.commit('setUserInfo', '')
+              this.$router.push('/my')
+            }
+          })
+        })
+        .catch(() => {
+          // on cancel
+        })
     }
+  },
+  components: {
+    MyButton
   }
 }
 </script>
@@ -68,6 +108,15 @@ export default {
     }
     .van-nav-bar__title {
       color: #ffffff;
+    }
+  }
+  .out-login {
+    padding: 20px 0;
+    text-align: center;
+    .out-btn {
+      width: 270px;
+      height: 40px;
+      font-size: 15px;
     }
   }
 }

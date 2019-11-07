@@ -14,7 +14,7 @@
         >
           <van-button
             class="code"
-            @click="handleCode"
+            @click="handleGetCode"
             slot="button"
             style="width:100px"
             :disabled="isDisabled"
@@ -35,6 +35,7 @@
 import MyButton from '@/base/button/button'
 import Vue from 'vue'
 import { Field, NavBar, Button, Toast } from 'vant'
+import { getCode, register } from '@/api/user'
 Vue.use(Field)
   .use(NavBar)
   .use(Button)
@@ -43,8 +44,8 @@ Vue.use(Field)
 // const TEL_REG = RegExp(
 //   /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
 // );
-// const CODE_REG = RegExp(/^\d{4}$/);
-// const TIME = 60;
+const CODE_REG = RegExp(/^\d{4}$/)
+const TIME = 60
 export default {
   data () {
     return {
@@ -61,13 +62,68 @@ export default {
     MyButton
   },
   methods: {
-    handelRegister () {},
+    handelRegister () {
+      if (this.phone === '') {
+        return Toast('请输入正确的手机号码')
+      }
+      if (!CODE_REG.test(this.voty)) {
+        return Toast('请输入正确的验证码')
+      }
+      if (this.pass_word === '' || this.pass_words === '') {
+        return Toast('请输入密码')
+      }
+      if (this.pass_word !== this.pass_words) {
+        return Toast('两次密码不一致')
+      }
+      const formData = Object.assign(
+        {},
+        {
+          code: this.voty,
+          userPhone: this.phone,
+          loginPassword: this.pass_word
+        }
+      )
+      register(formData).then(result => {
+        console.log(result)
+        if (result.data.code === '200') {
+          this.$router.push({
+            path: '/login'
+          })
+          return Toast('注册成功')
+        } else {
+          return Toast(result.data.message)
+        }
+      })
+    },
     onClickLeft () {
       this.$router.push({
         path: '/login'
       })
     },
-    handleCode () {}
+    handleGetCode () {
+      if (this.phone !== '') {
+        this.isDisabled = true
+        this.codeDesc = TIME
+        const formData = Object.assign(
+          {},
+          {
+            phone: this.phone
+          }
+        )
+        getCode(formData).then(result => {
+          this.timer = setInterval(() => {
+            this.codeDesc--
+            if (this.codeDesc === 0) {
+              clearInterval(this.timer)
+              this.codeDesc = '获取验证码'
+              this.isDisabled = false
+            }
+          }, 1000)
+        })
+      } else {
+        return Toast('请输入正确的手机号码')
+      }
+    }
   }
 }
 </script>

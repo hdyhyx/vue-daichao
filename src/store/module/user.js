@@ -7,12 +7,16 @@ import {
 } from '@/api/user'
 export default {
   state: {
-    token: ''
+    token: '',
+    userInfo: ''
   },
   mutations: {
     setToken (state, token) {
       setToken(token)
       state.token = token
+    },
+    setUserInfo (state, userInfo) {
+      state.userInfo = userInfo
     }
   },
   actions: {
@@ -25,14 +29,14 @@ export default {
           const {
             data: {
               code,
-              message
+              results
             }
           } = result
           if (code !== '200') {
             resolve(result)
             return
           }
-          commit('setToken', message)
+          commit('setToken', results)
           resolve(result)
         })
       });
@@ -43,6 +47,15 @@ export default {
     }) {
       return new Promise((resolve, reject) => {
         getUserInfo().then(res => {
+          const {
+            data: {
+              results,
+              code
+            }
+          } = res
+          if (code === '200') {
+            commit('setUserInfo', results)
+          }
           resolve(res)
         })
       });

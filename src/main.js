@@ -10,7 +10,11 @@ import '@/common/font/iconfont.js'
 require('@/mock/index.js')
 
 fastclick.attach(document.body);
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  loading: require('@/common/images/loading.gif'),
+  attempt: 1
+})
 
 Vue.config.productionTip = false
 new Vue({

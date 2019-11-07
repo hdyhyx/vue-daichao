@@ -2,7 +2,7 @@
   <div class="my">
     <div class="head-wrap">
       <div class="avatar" @click="goToLogin"></div>
-      <div class="tel">{{isLogin?'18030093132':'请登录'}}</div>
+      <div class="tel">{{isLogin?userInfo.name:'请登录'}}</div>
     </div>
     <div class="cell-list">
       <van-cell is-link to="/historyPage">
@@ -35,6 +35,7 @@
 
 <script>
 import Vue from 'vue'
+import { mapState } from 'vuex'
 import { Cell, CellGroup } from 'vant'
 import { getToken } from '@/common/utils/cookie'
 Vue.use(Cell).use(CellGroup)
@@ -44,6 +45,11 @@ export default {
     return {
       isLogin: false
     }
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
   },
   methods: {
     goToLogin () {
@@ -56,7 +62,6 @@ export default {
     }
   },
   created () {
-    console.log(getToken(), 111)
     this.isLogin = !!getToken()
   }
 }

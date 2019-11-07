@@ -5,7 +5,7 @@
         <span>Beanda</span>
         <img slot="icon" slot-scope="props" :src="props.active ? homeIcon.active : homeIcon.normal" />
       </van-tabbar-item>
-      <van-tabbar-item replace to="/market/1">
+      <van-tabbar-item replace to="/market">
         <span>Pasar</span>
         <img
           slot="icon"

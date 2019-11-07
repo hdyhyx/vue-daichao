@@ -8,17 +8,25 @@
       </van-dropdown-menu>
     </div>
     <div class="produject-list">
-      <scroll class="produject-wrap" v-if="productList.length && !productLoading">
+      <scroll
+        class="produject-wrap"
+        :pullup="true"
+        @scrollToEnd="scroll"
+        v-if="productList.length && !productLoading"
+      >
         <div>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
-          <recommend-item></recommend-item>
+          <div>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+            <recommend-item></recommend-item>
+          </div>
+          <pullup-loading :isPullUpLoad="isPullLoding"></pullup-loading>
         </div>
       </scroll>
       <div v-if="isUnfoundData">
@@ -37,9 +45,10 @@
 </template>
 <script>
 import Vue from 'vue'
-import Scroll from '@/base/scroll/scroll.vue'
-import RecommendItem from '@/components/recommendItem/recommendItem.vue'
-import UnfoundData from '@/components/unfoundData/unfoundData.vue'
+import Scroll from '@/base/scroll/scroll'
+import RecommendItem from '@/components/recommendItem/recommendItem'
+import UnfoundData from '@/components/unfoundData/unfoundData'
+import PullupLoading from '@/components/pullupLoading/pullupLoading'
 import { DropdownMenu, DropdownItem, Skeleton } from 'vant'
 import { getAllProduct, getHistoryProduct } from '@/api/product'
 Vue.use(DropdownMenu)
@@ -54,6 +63,7 @@ export default {
         rightOrder: ''
       },
       productList: [],
+      isPullLoding: false,
       isUnfoundData: false,
       productLoading: true,
       pageNum: '10', // 个数
@@ -93,7 +103,8 @@ export default {
   components: {
     Scroll,
     RecommendItem,
-    UnfoundData
+    UnfoundData,
+    PullupLoading
   },
   created () {
     const formData = Object.assign(
@@ -106,6 +117,9 @@ export default {
     this.getAllProduct(formData)
   },
   methods: {
+    scroll () {
+      this.isPullLoding = true
+    },
     onChangeSort (value) {
       console.log(value)
     },

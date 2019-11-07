@@ -49,10 +49,12 @@ export const getAllProduct = (data) => {
     data
   })
 }
-export const getHistoryProduct = () => {
+export const getHistoryProduct = (data) => {
+  data = qs.stringify(data)
   return service({
-    url: '/home/product',
-    method: 'post'
+    url: '/product/queryProductByPage',
+    method: 'post',
+    data
   })
 }
 

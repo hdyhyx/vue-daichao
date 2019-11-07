@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import MyButton from '@/base/button/button'
 import Vue from 'vue'
+import MyButton from '@/base/button/button'
 import { Field, NavBar, Toast } from 'vant'
 Vue.use(Field)
   .use(NavBar)
@@ -60,10 +60,12 @@ export default {
         this.$store.dispatch('handleLogin', formData).then(res => {
           loading.clear()
           const {
-            data: { code }
+            data: { code, message }
           } = res
           if (code === '200') {
             this.$router.push('/home')
+          } else {
+            Toast(message)
           }
         })
       }

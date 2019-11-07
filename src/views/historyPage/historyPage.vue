@@ -3,19 +3,39 @@
     <div class="history">
       <van-nav-bar title="Sejarah" left-arrow @click-left="onClickLeft" />
       <div class="history-list">
-        <scroll class="history-wrap">
+        <scroll
+          class="history-wrap"
+          :pullup="true"
+          @scrollToEnd="scroll"
+          v-if="productList.length && !productSkeleton"
+        >
           <div>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
-            <recommend-item></recommend-item>
+            <div>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+              <history-item></history-item>
+            </div>
+            <pullup-loading :isPullUpLoad="isPullLoding"></pullup-loading>
           </div>
         </scroll>
+        <div v-if="isUnfoundData">
+          <unfound-data></unfound-data>
+        </div>
+        <div v-if="productSkeleton" class="product-skeleton">
+          <van-skeleton title avatar :row="2" />
+          <van-skeleton style="margin-top:15px" title avatar :row="2" />
+          <van-skeleton style="margin-top:15px" title avatar :row="2" />
+          <van-skeleton style="margin-top:15px" title avatar :row="2" />
+          <van-skeleton style="margin-top:15px" title avatar :row="2" />
+          <van-skeleton style="margin-top:15px" title avatar :row="2" />
+        </div>
       </div>
     </div>
   </transition>
@@ -24,23 +44,62 @@
 <script>
 import Vue from 'vue'
 import Scroll from '@/base/scroll/scroll.vue'
-import recommendItem from '@/components/recommendItem/recommendItem.vue'
-import { Cell, CellGroup, NavBar } from 'vant'
-Vue.use(Cell)
-  .use(CellGroup)
+import HistoryItem from '@/components/historyItem/historyItem'
+import UnfoundData from '@/components/unfoundData/unfoundData'
+import PullupLoading from '@/components/pullupLoading/pullupLoading'
+import { Skeleton, Toast, NavBar } from 'vant'
+import { getHistoryProduct } from '@/api/product'
+Vue.use(Skeleton)
+  .use(Toast)
   .use(NavBar)
+
 export default {
   data () {
-    return {}
-  },
-  methods: {
-    onClickLeft () {
-      this.$router.go(-1)
+    return {
+      productSkeleton: true,
+      isUnfoundData: false,
+      isPullLoding: false,
+      productList: [],
+      pageNum: 10,
+      size: 1
     }
   },
   components: {
     Scroll,
-    recommendItem
+    HistoryItem,
+    UnfoundData,
+    PullupLoading
+  },
+  created () {
+    this.getHistoryProduct()
+  },
+  methods: {
+    onClickLeft () {
+      this.$router.go(-1)
+    },
+    scroll () {
+      this.isPullLoding = true
+    },
+    getHistoryProduct (pageNum, size) {
+      const formData = Object.assign(
+        {},
+        {
+          pageNum,
+          size
+        }
+      )
+      getHistoryProduct(formData).then(res => {
+        this.productSkeleton = false
+        const {
+          data: { result }
+        } = res
+        if (result.length) {
+          this.productList = result
+        } else {
+          this.isUnfoundData = true
+        }
+      })
+    }
   }
 }
 </script>

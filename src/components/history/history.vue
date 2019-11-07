@@ -1,48 +1,106 @@
 <template>
   <div class="produject-list">
-    <scroll class="produject-wrap">
+    <scroll
+      class="produject-wrap"
+      :pullup="true"
+      @scrollToEnd="scroll"
+      v-if="productList.length && !productSkeleton"
+    >
       <div>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
-        <recommend-item></recommend-item>
+        <div>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+          <history-item></history-item>
+        </div>
+        <pullup-loading :isPullUpLoad="isPullLoding"></pullup-loading>
       </div>
     </scroll>
+    <div v-if="isUnfoundData">
+      <unfound-data></unfound-data>
+    </div>
+    <div v-if="productSkeleton" class="product-skeleton">
+      <van-skeleton title avatar :row="2" />
+      <van-skeleton style="margin-top:15px" title avatar :row="2" />
+      <van-skeleton style="margin-top:15px" title avatar :row="2" />
+      <van-skeleton style="margin-top:15px" title avatar :row="2" />
+      <van-skeleton style="margin-top:15px" title avatar :row="2" />
+      <van-skeleton style="margin-top:15px" title avatar :row="2" />
+    </div>
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import Scroll from '@/base/scroll/scroll.vue'
-import recommendItem from '@/components/recommendItem/recommendItem.vue'
+import HistoryItem from '@/components/historyItem/historyItem'
+import UnfoundData from '@/components/unfoundData/unfoundData'
+import PullupLoading from '@/components/pullupLoading/pullupLoading'
+import { getToken } from '@/common/utils/cookie'
+import { Skeleton, Toast } from 'vant'
+import { getHistoryProduct } from '@/api/product'
+Vue.use(Skeleton).use(Toast)
+
 export default {
   data () {
     return {
-      value1: 0,
-      value2: '1',
-      value3: '4',
-      option1: [
-        { text: 'Urutan Standar', value: 0 },
-        { text: 'Bunga Rendah', value: 1 },
-        { text: 'Persetujuan Mudah', value: 2 }
-      ],
-      option2: [
-        { text: 'Jumlah Uang', value: '1' },
-        { text: '好评排序', value: '2' },
-        { text: '销量排序', value: '3' }
-      ],
-      option3: [
-        { text: 'Membyar sekali', value: '4' },
-        { text: 'Pembayaran cicilan', value: '5' }
-      ]
+      productSkeleton: true,
+      isUnfoundData: false,
+      isPullLoding: false,
+      productList: [],
+      pageNum: 10,
+      size: 1
     }
   },
   components: {
     Scroll,
-    recommendItem
+    HistoryItem,
+    UnfoundData,
+    PullupLoading
+  },
+  created () {
+    if (getToken()) {
+      this.getHistoryProduct()
+    } else {
+      this.productList = []
+      this.productSkeleton = false
+      this.isUnfoundData = true
+      Toast('请登录')
+    }
+  },
+  methods: {
+    scroll () {
+      this.isPullLoding = true
+    },
+    getHistoryProduct (pageNum, size) {
+      const formData = Object.assign(
+        {},
+        {
+          pageNum,
+          size
+        }
+      )
+      getHistoryProduct(formData).then(res => {
+        this.productSkeleton = false
+        const {
+          data: { result }
+        } = res
+        if (result.length) {
+          this.productList = result
+        } else {
+          this.isUnfoundData = true
+        }
+      })
+    }
   }
 }
 </script>

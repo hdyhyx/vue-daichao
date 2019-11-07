@@ -13,7 +13,7 @@ export default [{
   component: () => import('@/views/details/details.vue')
 },
 {
-  path: '/market/:id',
+  path: '/market',
   name: 'market',
   component: () => import('@/views/market/market.vue')
 },

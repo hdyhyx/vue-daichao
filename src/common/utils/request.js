@@ -22,15 +22,13 @@ service.interceptors.response.use(
     let res = {}
     res.status = response.status
     res.data = response.data
-    if (res.data.code === '10000') {
-      router.push('/login')
-    }
     return res
   },
   error => {
     if (error.response && error.response.status === 404) {
       router.push('')
     }
+    console.log(error)
     return Promise.reject(error.response)
   }
 )
