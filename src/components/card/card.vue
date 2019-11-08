@@ -1,20 +1,22 @@
 <template>
   <div class="card">
     <div class="head">
-      <div class="head-left">
+      <div class="head-left" @click="handleLeft">
         <div class="container">
           <div class="price">
             <em>RP</em>
-            1000.000
+            {{replacePrice(priceValue)}}
           </div>
+          <div class="triangle"></div>
           <p class="desc">Pinjaman</p>
         </div>
       </div>
-      <div class="head-right">
+      <div class="head-right" @click="handleRight">
         <div class="date">
-          <em>7</em>
+          <em>{{dateValue}}</em>
           Hari
         </div>
+        <div class="triangle"></div>
         <p class="desc">Lama Pinjam</p>
       </div>
     </div>
@@ -24,21 +26,76 @@
         <p class="desc">Referemsi tarif</p>
       </div>
       <div class="footer-mid">
-        <div class="price">Rp 1.021.000000000</div>
+        <div class="price">Rp {{replacePrice(payAmount)}}</div>
         <p class="desc">Pembayaran</p>
       </div>
       <div class="footer-right">
-        <div class="interest-price">Rp 21.000</div>
+        <div class="interest-price">Rp {{replacePrice(interestRate)}}</div>
         <p class="desc">Bunga + admin</p>
       </div>
     </div>
+    <!-- 选择金额 -->
+    <van-popup v-model="isSelectPrice" position="bottom" :style="{ height: '40%' }">
+      <van-picker :columns="priceArr" show-toolbar @cancel="onCancel" @confirm="onConfirmPrice" />
+    </van-popup>
+    <van-popup v-model="isSelectDate" position="bottom" :style="{ height: '40%' }">
+      <van-picker :columns="dateArr" show-toolbar @cancel="onCancel" @confirm="onConfirmDate" />
+    </van-popup>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import { Popup, Picker } from 'vant'
+Vue.use(Popup).use(Picker)
 export default {
   data () {
-    return {}
+    return {
+      isSelectPrice: false,
+      isSelectDate: false,
+      priceArr: [
+        {
+          text: 'RP 100.000',
+          price: 100000
+        },
+        {
+          text: 'RP 200.000',
+          price: 200000
+        },
+        {
+          text: 'RP 300.000',
+          price: 300000
+        },
+        {
+          text: 'RP 400.000',
+          price: 400000
+        },
+        {
+          text: 'RP 500.000',
+          price: 500000
+        }
+      ],
+      priceValue: 100000,
+      dateArr: [
+        {
+          text: '7 Hari',
+          date: 7
+        },
+        {
+          text: '30 Hari',
+          date: 30
+        },
+        {
+          text: '90 Hari',
+          date: 90
+        },
+        {
+          text: '365 Hari',
+          date: 365
+        }
+      ],
+      dateValue: 7
+    }
   },
   props: {
     detail: {
@@ -46,8 +103,41 @@ export default {
       default: () => {}
     }
   },
-  created () {
-    console.log(this.detail)
+  computed: {
+    interestRate () {
+      let interest = (
+        this.dateValue *
+        (this.detail.interestRate / 10) *
+        this.priceValue
+      ).toFixed(0)
+      return interest
+    },
+    payAmount () {
+      return parseInt(this.interestRate) + parseInt(this.priceValue)
+    }
+  },
+  methods: {
+    replacePrice (price) {
+      return price.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1.')
+    },
+    handleLeft () {
+      this.isSelectPrice = true
+    },
+    handleRight () {
+      this.isSelectDate = true
+    },
+    onCancel () {
+      this.isSelectPrice = false
+      this.isSelectDate = false
+    },
+    onConfirmPrice (value) {
+      this.priceValue = value.price
+      this.isSelectPrice = false
+    },
+    onConfirmDate (value) {
+      this.dateValue = value.date
+      this.isSelectDate = false
+    }
   }
 }
 </script>
@@ -71,7 +161,7 @@ export default {
         .price {
           font-family: 'DINMedium';
           width: 145px;
-          padding: 5px 0;
+          padding: 5px 10px 0 5px;
           font-size: 23px;
           color: #e14b36;
           overflow: hidden;
@@ -82,6 +172,16 @@ export default {
             padding-right: 5px;
             font-style: normal;
           }
+        }
+        .triangle {
+          position: absolute;
+          top: 15px;
+          right: 0;
+          width: 0;
+          height: 0;
+          border-width: 5px;
+          border-style: solid;
+          border-color: #333 transparent transparent transparent;
         }
         .desc {
           text-align: center;
@@ -105,10 +205,11 @@ export default {
     }
     .head-right {
       flex: 1;
-      padding: 10px;
+      padding: 10px 10px 10px 0;
+      position: relative;
       .date {
         font-family: 'DINMedium';
-        width: 145px;
+        width: 130px;
         padding: 5px 0;
         font-size: 23px;
         color: #e14b36;
@@ -120,6 +221,16 @@ export default {
           padding-right: 5px;
           font-style: normal;
         }
+      }
+      .triangle {
+        position: absolute;
+        top: 25px;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
       }
       .desc {
         text-align: center;
@@ -204,6 +315,38 @@ export default {
       font-size: 12px;
       text-align: center;
       color: #999999;
+    }
+  }
+}
+@media screen and (max-width: 350px) {
+  .card {
+    .head {
+      .head-left {
+        .container {
+          .price {
+            width: 130px;
+          }
+        }
+      }
+      .head-right {
+        .date {
+          width: 100px;
+        }
+      }
+    }
+    .footer {
+      .footer-left {
+      }
+      .footer-mid {
+        .price {
+          width: 100px;
+        }
+      }
+      .footer-right {
+        .interest-price {
+          width: 100px;
+        }
+      }
     }
   }
 }

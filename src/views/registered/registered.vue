@@ -9,7 +9,7 @@
           center
           clearable
           label="短信验证码"
-          maxlength="4"
+          maxlength="6"
           placeholder="请输入短信验证码"
         >
           <van-button
@@ -44,7 +44,7 @@ Vue.use(Field)
 // const TEL_REG = RegExp(
 //   /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
 // );
-const CODE_REG = RegExp(/^\d{4}$/)
+const CODE_REG = RegExp(/^\d{6}$/)
 const TIME = 60
 export default {
   data () {

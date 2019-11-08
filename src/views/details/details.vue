@@ -101,7 +101,9 @@ export default {
       })
     },
     handleSaveHistory () {
-      console.log(111)
+      // console.log(111)
+      // window.location.href =
+      //   'http://play.google.com/store/apps/details?id=com.google.android.apps.maps'
       const formData = Object.assign(
         {},
         {
@@ -198,7 +200,7 @@ export default {
       .list {
         font-size: 13px;
         .item {
-          line-height: 18px;
+          line-height: 24px;
           color: #999999;
         }
       }

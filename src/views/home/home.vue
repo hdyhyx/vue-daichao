@@ -21,12 +21,16 @@
       <div class="title">Platform Unggulan</div>
     </div>
     <div class="recommend-wrap">
-      <scroll class="recommend-list" v-if="productList.length">
+      <scroll
+        class="recommend-list"
+        :data="productList"
+        v-if="productList.length && !productSkeleton"
+      >
         <div>
           <recommend-item v-for="(item,index) in productList" :key="index" :recommend="item"></recommend-item>
         </div>
       </scroll>
-      <div v-else class="product-loading">
+      <div v-if="productSkeleton" class="product-loading">
         <van-skeleton title avatar :row="2" />
         <van-skeleton style="margin-top:15px" title avatar :row="2" />
         <van-skeleton style="margin-top:15px" title avatar :row="2" />
@@ -34,11 +38,15 @@
         <van-skeleton style="margin-top:15px" title avatar :row="2" />
         <van-skeleton style="margin-top:15px" title avatar :row="2" />
       </div>
+      <div v-if="isUnfoundData">
+        <unfound-data></unfound-data>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Vue from 'vue'
+import UnfoundData from '@/components/unfoundData/unfoundData'
 import Slider from '@/base/slider/slider.vue'
 import Scroll from '@/base/scroll/scroll.vue'
 import recommendItem from '@/components/recommendItem/recommendItem.vue'
@@ -53,13 +61,16 @@ export default {
   data () {
     return {
       recommends: [],
-      productList: []
+      productList: [],
+      productSkeleton: true,
+      isUnfoundData: false
     }
   },
   components: {
     Slider,
     Scroll,
-    recommendItem
+    recommendItem,
+    UnfoundData
   },
   methods: {
     loadImg () {}
@@ -72,7 +83,11 @@ export default {
     })
     getHomeProduct().then(res => {
       const { results } = res.data
+      this.productSkeleton = false
       this.productList = results
+      if (!this.productList.length) {
+        this.isUnfoundData = true
+      }
     })
   }
 }

@@ -67,16 +67,13 @@ export default {
   },
   methods: {
     scroll () {
+      if (this.historyList.length < 9) {
+        return
+      }
       this.isPullLoding = true
       this.pageNum++
-      const formData = Object.assign(
-        {},
-        {
-          pageNum: this.pageNum,
-          size: this.size
-        }
-      )
-      this.getHistoryProduct(formData)
+
+      this.getHistoryProduct(this.pageNum, this.size)
     },
     getHistoryProduct (pageNum, size) {
       const formData = Object.assign(
