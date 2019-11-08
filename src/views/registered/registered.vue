@@ -75,6 +75,11 @@ export default {
       if (this.pass_word !== this.pass_words) {
         return Toast('两次密码不一致')
       }
+      const loading = Toast.loading({
+        duration: 0,
+        message: 'Loading...',
+        forbidClick: true
+      })
       const formData = Object.assign(
         {},
         {
@@ -84,7 +89,7 @@ export default {
         }
       )
       register(formData).then(result => {
-        console.log(result)
+        loading.clear()
         if (result.data.code === '200') {
           this.$router.push({
             path: '/login'

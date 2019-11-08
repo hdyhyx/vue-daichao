@@ -49,8 +49,10 @@ export default {
     },
     handleOutLogin () {
       Dialog.confirm({
-        title: '标题',
-        message: '弹窗内容'
+        title: '',
+        message: 'Keluar Masuk',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
       })
         .then(() => {
           const formData = Object.assign(

@@ -21,7 +21,7 @@
 import Vue from 'vue'
 import MyButton from '@/base/button/button'
 import { Cell, CellGroup, NavBar, Field } from 'vant'
-import { setHomeBanner } from '@/api/product'
+// import { setHomeBanner } from '@/api/product'
 
 Vue.use(Cell)
   .use(CellGroup)
@@ -39,7 +39,7 @@ export default {
     },
     handleClickSave () {
       // Addproduct()
-      setHomeBanner()
+      // setHomeBanner()
     }
   },
   components: {

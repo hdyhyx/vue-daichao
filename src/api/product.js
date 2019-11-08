@@ -52,7 +52,7 @@ export const getAllProduct = (data) => {
 export const getHistoryProduct = (data) => {
   data = qs.stringify(data)
   return service({
-    url: '/product/getHistory',
+    url: '/product/getDownloadHistory',
     method: 'post',
     data
   })

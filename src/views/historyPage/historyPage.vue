@@ -94,7 +94,7 @@ export default {
           Toast('暂无数据')
         }
         if (!this.historyList.length) {
-          this.UnfoundData = true
+          this.isUnfoundData = true
         }
       })
     }

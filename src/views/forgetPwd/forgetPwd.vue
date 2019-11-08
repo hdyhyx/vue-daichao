@@ -9,7 +9,7 @@
           center
           clearable
           label="短信验证码"
-          maxlength="4"
+          maxlength="6"
           placeholder="请输入短信验证码"
         >
           <van-button
@@ -21,8 +21,8 @@
             type="default"
           >{{codeDesc}}</van-button>
         </van-field>
-        <van-field type="password" label="密码" v-model="new_password" placeholder="请输入密码"></van-field>
-        <van-field type="password" label="确认密码" v-model="confirm_password" placeholder="请再次输入密码"></van-field>
+        <van-field type="password" label="密码" v-model="pass_word" placeholder="请输入密码"></van-field>
+        <van-field type="password" label="确认密码" v-model="pass_words" placeholder="请再次输入密码"></van-field>
       </div>
       <div class="save-wrap">
         <my-button class="save-btn" @click="handelSave">保存</my-button>
@@ -44,15 +44,15 @@ Vue.use(Field)
 // const TEL_REG = RegExp(
 //   /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/
 // )
-const CODE_REG = RegExp(/^\d{4}$/)
+const CODE_REG = RegExp(/^\d{6}$/)
 const TIME = 60
 export default {
   data () {
     return {
       code: '',
       phone: '',
-      new_password: '',
-      confirm_password: '',
+      pass_word: '',
+      pass_words: '',
       codeDesc: '获取验证码',
       isDisabled: false,
       timer: null
@@ -66,7 +66,7 @@ export default {
       if (this.phone === '') {
         return Toast('请输入正确的手机号码')
       }
-      if (!CODE_REG.test(this.voty)) {
+      if (!CODE_REG.test(this.code)) {
         return Toast('请输入正确的验证码')
       }
       if (this.pass_word === '' || this.pass_words === '') {
@@ -83,7 +83,7 @@ export default {
       const formData = Object.assign(
         {},
         {
-          code: this.voty,
+          code: this.code,
           phone: this.phone,
           newPassword: this.pass_word
         }
@@ -94,7 +94,7 @@ export default {
           this.$router.push({
             path: '/login'
           })
-          return Toast('注册成功')
+          return Toast('修改成功')
         } else {
           return Toast(result.data.message)
         }

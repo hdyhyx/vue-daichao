@@ -38,10 +38,12 @@ export const getCode = (data) => {
 }
 
 // 忘记密码
-export const forgotPassword = () => {
+export const forgotPassword = (data) => {
+  data = qs.stringify(data)
   return service({
     url: '/user/forgetPassword',
-    method: 'post'
+    method: 'post',
+    data
   })
 }
 
