@@ -56,6 +56,7 @@ import Vue from 'vue'
 import Scroll from '@/base/scroll/scroll.vue'
 import MyButton from '@/base/button/button'
 import Card from '@/components/card/card'
+import { getToken } from '@/common/utils/cookie'
 import { getProductDetails, setHistoryProduct } from '@/api/product'
 import { NavBar, Toast, Skeleton } from 'vant'
 Vue.use(NavBar)
@@ -101,6 +102,9 @@ export default {
       })
     },
     handleSaveHistory () {
+      if (!getToken()) {
+        return Toast('请登录')
+      }
       // console.log(111)
       // window.location.href =
       //   'http://play.google.com/store/apps/details?id=com.google.android.apps.maps'

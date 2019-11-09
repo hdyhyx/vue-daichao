@@ -84,7 +84,7 @@ export default {
       width: 73px;
       height: 73px;
       border-radius: 50%;
-      background-image: url('http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/mall/avatar.png');
+      background-image: url('http://doveicnew.oss-cn-shenzhen.aliyuncs.com/applet/daichao/user.png');
       background-size: cover;
       background-repeat: no-repeat;
     }

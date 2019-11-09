@@ -4,7 +4,7 @@ function resolve (dir) {
   return path.join(__dirname, './', dir)
 }
 const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/'
+  ? 'http://47.74.180.93:9511/'
   : '/'
 module.exports = {
   publicPath: BASE_URL,
