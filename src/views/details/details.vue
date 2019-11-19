@@ -47,6 +47,31 @@
       <div class="install-wrap">
         <my-button class="install-btn" @click="handleSaveHistory">Daftar Sekarang</my-button>
       </div>
+      <!-- 选择下载途径-->
+      <van-popup v-model="showUpload" round position="bottom" :style="{ height: '100px' }">
+        <div class="upload-wrap">
+          <div class="contnet-left">
+            <div class="download-icon">
+              <svg class="icon icon-size" :style="{'color':downloadIconColor}" aria-hidden="true">
+                <use xlink:href="#iconupload" />
+              </svg>
+            </div>
+            <div class="desc">Download APK</div>
+          </div>
+          <div class="content-right">
+            <div class="download-icon">
+              <svg
+                class="icon icon-size"
+                :style="{'color':googlePlayIconColor}"
+                aria-hidden="true"
+              >
+                <use xlink:href="#iconGoogle-Play" />
+              </svg>
+            </div>
+            <div class="desc">Google-Play</div>
+          </div>
+        </div>
+      </van-popup>
     </div>
   </transition>
 </template>
@@ -58,15 +83,19 @@ import MyButton from '@/base/button/button'
 import Card from '@/components/card/card'
 import { getToken } from '@/common/utils/cookie'
 import { getProductDetails, setHistoryProduct } from '@/api/product'
-import { NavBar, Toast, Skeleton } from 'vant'
+import { NavBar, Toast, Skeleton, Popup } from 'vant'
 Vue.use(NavBar)
   .use(Toast)
   .use(Skeleton)
+  .use(Popup)
 export default {
   data () {
     return {
+      showUpload: false,
       productDetails: '',
-      productId: ''
+      productId: '',
+      downloadIconColor: '#999999',
+      googlePlayIconColor: '#999999'
     }
   },
   components: {
@@ -94,29 +123,44 @@ export default {
     getProductDetails (formData) {
       getProductDetails(formData).then(res => {
         const {
-          data: { code, results }
+          data: { code, results, message }
         } = res
         if (code === '200') {
+          console.log(results.googleUrl)
+          if (results.googleUrl !== null && results.googleUrl !== '') {
+            this.googlePlayIconColor = '#2291e0'
+          }
+          if (results.url !== null && results.url !== '') {
+            this.downloadIconColor = '#2291e0'
+          }
           this.productDetails = results
+        } else {
+          Toast(message)
         }
       })
     },
     handleSaveHistory () {
       if (!getToken()) {
-        return Toast('请登录')
+        return this.$router.push({
+          path: '/login',
+          query: {
+            redirect: `/details?productId=${this.productId}`
+          }
+        })
       }
+      this.showUpload = true
       // console.log(111)
       // window.location.href =
       //   'http://play.google.com/store/apps/details?id=com.google.android.apps.maps'
-      const formData = Object.assign(
-        {},
-        {
-          productId: this.productId
-        }
-      )
-      setHistoryProduct(formData).then(res => {
-        console.log(res)
-      })
+      // const formData = Object.assign(
+      //   {},
+      //   {
+      //     productId: this.productId
+      //   }
+      // )
+      // setHistoryProduct(formData).then(res => {
+      //   console.log(res)
+      // })
     }
   }
 }
@@ -238,6 +282,36 @@ export default {
       -webkit-transform: scale(0.5, 0.5);
       transform: scale(0.5, 0.5);
       -webkit-transform-origin: top left;
+    }
+  }
+  .upload-wrap {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    color: #333333;
+    .contnet-left {
+      flex: 1;
+      .download-icon {
+        margin: 5px 0 5px 0;
+        text-align: center;
+        font-size: 60px;
+      }
+      .desc {
+        font-size: 12px;
+      }
+    }
+    .content-right {
+      flex: 1;
+      .download-icon {
+        margin: 12px 0 5px 0;
+        text-align: center;
+        font-size: 48px;
+      }
+      .desc {
+        margin-top: 10px;
+        font-size: 12px;
+      }
     }
   }
 }

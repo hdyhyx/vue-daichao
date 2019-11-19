@@ -31,7 +31,7 @@ Vue.use(Field)
   .use(Toast)
 export default {
   data () {
-    return { loginName: '', loginPassword: '' }
+    return { loginName: '', loginPassword: '', redirect: '' }
   },
   components: {
     MyButton
@@ -63,12 +63,23 @@ export default {
             data: { code, message }
           } = res
           if (code === '200') {
-            this.$router.push('/home')
+            if (this.redirect !== '') {
+              this.$router.replace({
+                path: this.redirect
+              })
+            } else {
+              this.$router.push('/home')
+            }
           } else {
             Toast(message)
           }
         })
       }
+    }
+  },
+  created () {
+    if (this.$route.query.redirect !== undefined) {
+      this.redirect = this.$route.query.redirect
     }
   }
 }

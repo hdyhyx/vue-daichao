@@ -4,8 +4,8 @@
       <div class="slider-content" v-if="recommends.length">
         <slider>
           <div v-for="(item,index) in recommends" :key="index">
-            <a class="slide-item" href="/home">
-              <img @load="loadImg" :src="item.address" />
+            <a class="slide-item" :href="'#/details?productId='+item.url">
+              <img @load="loadImg" :src="'http://47.74.180.93:9511/'+item.address" />
             </a>
           </div>
         </slider>

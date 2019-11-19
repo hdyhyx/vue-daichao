@@ -21,7 +21,7 @@
 import Vue from 'vue'
 import MyButton from '@/base/button/button'
 import { Cell, CellGroup, NavBar, Field } from 'vant'
-// import { setHomeBanner } from '@/api/product'
+import { Addproduct } from '@/api/product'
 
 Vue.use(Cell)
   .use(CellGroup)
@@ -38,7 +38,7 @@ export default {
       this.$router.go(-1)
     },
     handleClickSave () {
-      // Addproduct()
+      Addproduct()
       // setHomeBanner()
     }
   },

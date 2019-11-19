@@ -80,11 +80,11 @@ export const getProductDetails = (data) => {
 export const Addproduct = () => {
   let data = {
     name: 'test15',
-    loanTime: '90', // 时间
-    interestRate: '0.5', // 利率
-    loanAmount: '98800000', // 金额
-    applicationRequirements: '年满18周岁', // 条件
-    productDescription: '利息超低', // 描述
+    loanTime: '3,7,30,60,90', // 时间
+    interestRate: '0.3', // 利率
+    loanAmount: '100000,20000,30000,40000,500000', // 金额
+    applicationRequirements: 'klik install,klik install,klik install,klik install', // 条件
+    productDescription: 'klik install,klik install,klik install,klik install,klik install', // 描述
     url: '', // 路径
     productIcon: '', // 图标
     approvalRate: '0.4', // 通过率

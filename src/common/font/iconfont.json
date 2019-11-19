@@ -4,7 +4,22 @@
   "font_family": "iconfont",
   "css_prefix_text": "icon",
   "description": "",
-  "glyphs": [{
+  "glyphs": [
+    {
+      "icon_id": "999212",
+      "name": "下载",
+      "font_class": "upload",
+      "unicode": "e6db",
+      "unicode_decimal": 59099
+    },
+    {
+      "icon_id": "6808476",
+      "name": "Google-Play",
+      "font_class": "Google-Play",
+      "unicode": "edc6",
+      "unicode_decimal": 60870
+    },
+    {
       "icon_id": "11224173",
       "name": "my",
       "font_class": "my",
