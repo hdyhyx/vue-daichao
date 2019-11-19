@@ -1,13 +1,13 @@
 <template>
   <div class="item-wrap" @click="goToDetails">
     <div class="content-left">
-      <van-icon name="fire" />
+      <van-icon :size="18" :name="'http://47.74.180.93:9511'+recommend.productIcon" />
     </div>
     <div class="content-mid">
       <div class="produject-name">{{recommend.name}}</div>
       <div class="produject-price">
         <em>Rp</em>
-        {{recommend.loanAmount}}
+        {{recommend.loanAmountList[0]}}
       </div>
       <div class="produject-desc">
         <span class="interest">Bunga ≥{{recommend.interestRate}}% / hari</span>
@@ -23,6 +23,7 @@
 import Vue from 'vue'
 import { Icon } from 'vant'
 import MyButton from '@/base/button/button'
+import { sortNumber } from '@/common/utils/utils'
 Vue.use(Icon)
 export default {
   data () {
@@ -37,6 +38,7 @@ export default {
       default: () => {}
     }
   },
+  computed: {},
   methods: {
     goToDetails () {
       const productId = this.recommend.id
@@ -48,7 +50,11 @@ export default {
       })
     }
   },
-  created () {}
+  created () {
+    this.recommend.loanAmountList = this.recommend.loanAmountList.sort(
+      sortNumber
+    )
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -87,7 +93,7 @@ export default {
     }
   }
   .contnet-right {
-    flex: 0 100px;
+    flex: 0 80px;
     position: relative;
     .detail-btn {
       position: absolute;

@@ -92,7 +92,6 @@ export default {
         if (results.length) {
           this.historyList = this.historyList.concat(results)
         } else {
-          Toast('暂无数据')
         }
         if (!this.historyList.length) {
           this.isUnfoundData = true

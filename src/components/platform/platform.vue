@@ -113,6 +113,9 @@ export default {
   },
   methods: {
     scroll () {
+      if (this.productList.length < 9) {
+        return
+      }
       this.isPullLoding = true
       this.pageNum++
       const formData = Object.assign(

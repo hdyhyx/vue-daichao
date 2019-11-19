@@ -15,30 +15,22 @@
       <div class="details-info">
         <scroll class="details-wrap">
           <div>
-            <div class="terms-wrap">
+            <div class="terms-wrap" v-if="appDetail.length">
               <div class="title-wrap">
                 <div class="icon"></div>
                 <div class="title">Syarat Pendaftaran</div>
               </div>
               <ul class="list">
-                <li class="item">1. klik install</li>
-                <li class="item">2. akan lanjut ke halaman detail</li>
-                <li class="item">3. download semua produk app yang dibutuhkan</li>
-                <li class="item">4. isi data pribadi secara lengkap beserta jumlahuang</li>
-                <li class="item">5.menunggu proses verifikasi dan pencairan dana.</li>
+                <li class="item" v-for="(item,index) in appDetail" :key="index">{{index+'. '+item}}</li>
               </ul>
             </div>
-            <div class="desc-wrap">
+            <div class="desc-wrap" v-if="appDetail.length">
               <div class="title-wrap">
                 <div class="icon"></div>
                 <div class="title">Deskripsi Produk</div>
               </div>
               <ul class="list">
-                <li class="item">1. klik install</li>
-                <li class="item">2. akan lanjut ke halaman detail</li>
-                <li class="item">3. download semua produk app yang dibutuhkan</li>
-                <li class="item">4. isi data pribadi secara lengkap beserta jumlahuang</li>
-                <li class="item">5.menunggu proses verifikasi dan pencairan dana.</li>
+                <li class="item" v-for="(item,index) in appDetail" :key="index">{{index+'. '+item}}</li>
               </ul>
             </div>
           </div>
@@ -50,7 +42,7 @@
       <!-- 选择下载途径-->
       <van-popup v-model="showUpload" round position="bottom" :style="{ height: '100px' }">
         <div class="upload-wrap">
-          <div class="contnet-left">
+          <div class="contnet-left" @click="downloadApk">
             <div class="download-icon">
               <svg class="icon icon-size" :style="{'color':downloadIconColor}" aria-hidden="true">
                 <use xlink:href="#iconupload" />
@@ -58,7 +50,7 @@
             </div>
             <div class="desc">Download APK</div>
           </div>
-          <div class="content-right">
+          <div class="content-right" @click="goToGoolePlay">
             <div class="download-icon">
               <svg
                 class="icon icon-size"
@@ -91,6 +83,10 @@ Vue.use(NavBar)
 export default {
   data () {
     return {
+      googlePlayUrl: '',
+      downloadApkUrl: '',
+      appDetail: [],
+      appDesc: [],
       showUpload: false,
       productDetails: '',
       productId: '',
@@ -117,6 +113,19 @@ export default {
     }
   },
   methods: {
+    goToGoolePlay () {
+      if (this.googlePlayUrl === '') {
+        return
+      }
+      console.log(111)
+      this.setHistoryProduct()
+    },
+    downloadApk () {
+      if (this.downloadApkUrl === '') {
+        return
+      }
+      console.log(111)
+    },
     onClickLeft () {
       this.$router.go(-1)
     },
@@ -129,11 +138,16 @@ export default {
           console.log(results.googleUrl)
           if (results.googleUrl !== null && results.googleUrl !== '') {
             this.googlePlayIconColor = '#2291e0'
+            this.googlePlayUrl = results.googleUrl
           }
           if (results.url !== null && results.url !== '') {
             this.downloadIconColor = '#2291e0'
+            this.downloadApkUrl = results.url
           }
           this.productDetails = results
+          this.appDetail = results.applicationRequirementsList
+          this.appDesc = results.productDescriptionList
+          console.log(results)
         } else {
           Toast(message)
         }
@@ -149,18 +163,17 @@ export default {
         })
       }
       this.showUpload = true
-      // console.log(111)
-      // window.location.href =
-      //   'http://play.google.com/store/apps/details?id=com.google.android.apps.maps'
-      // const formData = Object.assign(
-      //   {},
-      //   {
-      //     productId: this.productId
-      //   }
-      // )
-      // setHistoryProduct(formData).then(res => {
-      //   console.log(res)
-      // })
+    },
+    setHistoryProduct () {
+      const formData = Object.assign(
+        {},
+        {
+          productId: this.productId
+        }
+      )
+      setHistoryProduct(formData).then(res => {
+        console.log(res)
+      })
     }
   }
 }

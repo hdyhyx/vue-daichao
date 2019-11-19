@@ -47,55 +47,42 @@
 <script>
 import Vue from 'vue'
 import { Popup, Picker } from 'vant'
+import { sortNumber } from '@/common/utils/utils'
 Vue.use(Popup).use(Picker)
 export default {
   data () {
     return {
       isSelectPrice: false,
       isSelectDate: false,
-      priceArr: [
-        {
-          text: 'RP 100.000',
-          price: 100000
-        },
-        {
-          text: 'RP 200.000',
-          price: 200000
-        },
-        {
-          text: 'RP 300.000',
-          price: 300000
-        },
-        {
-          text: 'RP 400.000',
-          price: 400000
-        },
-        {
-          text: 'RP 500.000',
-          price: 500000
-        }
-      ],
+      priceArr: [],
       priceValue: 100000,
-      dateArr: [
-        {
-          text: '7 Hari',
-          date: 7
-        },
-        {
-          text: '30 Hari',
-          date: 30
-        },
-        {
-          text: '90 Hari',
-          date: 90
-        },
-        {
-          text: '365 Hari',
-          date: 365
-        }
-      ],
+      dateArr: [],
       dateValue: 7
     }
+  },
+  created () {
+    this.priceArr = this.detail.loanAmountList.sort(sortNumber).map(item => {
+      let obj = Object.assign(
+        {},
+        {
+          text: `RP ${this.replacePrice(item)}`,
+          price: item
+        }
+      )
+      return obj
+    })
+    this.dateArr = this.detail.loanTimeList.sort(sortNumber).map(item => {
+      let obj = Object.assign(
+        {},
+        {
+          text: `${item} Hari`,
+          date: parseInt(item)
+        }
+      )
+      return obj
+    })
+    this.priceValue = this.priceArr[0].price
+    this.dateValue = this.dateArr[0].date
   },
   props: {
     detail: {
@@ -107,7 +94,7 @@ export default {
     interestRate () {
       let interest = (
         this.dateValue *
-        (this.detail.interestRate / 10) *
+        (this.detail.interestRate / 100) *
         this.priceValue
       ).toFixed(0)
       return interest

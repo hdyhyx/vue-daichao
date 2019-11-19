@@ -8,3 +8,7 @@ export const base64 = (blob, callback) => {
     callback(baseImg)
   }
 }
+
+export function sortNumber (a, b) {
+  return a - b
+}

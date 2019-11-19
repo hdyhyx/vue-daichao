@@ -9,22 +9,34 @@
     </div>
     <div class="content-mid">{{history.name}}</div>
     <div class="content-right">
-      <div class="price">Rp {{history.loanAmount}}</div>
-      <div class="time">15/09/2019</div>
+      <div class="price">Rp {{price}}</div>
+      <div class="time">{{time}}</div>
     </div>
   </div>
 </template>
 
 <script>
+import { sortNumber } from '@/common/utils/utils'
 export default {
   data () {
-    return {}
+    return {
+      price: '',
+      time: ''
+    }
   },
   props: {
     history: {
       type: Object,
       default: () => {}
     }
+  },
+  created () {
+    this.price = this.history.loanAmount.sort(sortNumber)[0]
+    this.time = this.history.downloadTime
+      .split(' ')[0]
+      .split('-')
+      .reverse()
+      .join('\\')
   }
 }
 </script>
