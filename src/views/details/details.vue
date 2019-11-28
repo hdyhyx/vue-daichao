@@ -113,18 +113,21 @@ export default {
     }
   },
   methods: {
-    goToGoolePlay () {
+    async goToGoolePlay () {
       if (this.googlePlayUrl === '') {
         return
       }
-      console.log(111)
-      this.setHistoryProduct()
+      await this.setHistoryProduct()
+      // eslint-disable-next-line no-undef
+      goGoolePlay(this.downloadApkUrl)
     },
-    downloadApk () {
+    async downloadApk () {
       if (this.downloadApkUrl === '') {
         return
       }
-      console.log(111)
+      await this.setHistoryProduct()
+      // eslint-disable-next-line no-undef
+      installApk(this.downloadApkUrl)
     },
     onClickLeft () {
       this.$router.go(-1)
